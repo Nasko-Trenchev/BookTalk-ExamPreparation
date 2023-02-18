@@ -9,7 +9,7 @@ exports.postLogin = async (req, res) =>{
 
     const {email, password} = req.body;
 
-    const user = await authService.findByUsername(username);
+    const user = await authService.findByEmail(email);
 
     if(!user){
 
