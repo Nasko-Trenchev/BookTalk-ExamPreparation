@@ -6,6 +6,7 @@ const bookController = require('./controllers/bookController');
 const {isAuthenticated}  = require('./middlewares/authMiddleware')
 
 router.get('/', homeController.getHomePage)
+router.get('/404', homeController.getErrorPage)
 
 router.get('/login', authController.getLogin);
 router.post('/login', authController.postLogin);
@@ -25,6 +26,10 @@ router.get('/edit/:id', isAuthenticated, bookController.getEdit);
 router.post('/edit/:id', isAuthenticated, bookController.postEdit);
 
 router.get("/profile", isAuthenticated, bookController.getProfile)
+
+router.all("*", (req, res) =>{
+    res.render('404');
+})
 
 //TODO: Routes
 

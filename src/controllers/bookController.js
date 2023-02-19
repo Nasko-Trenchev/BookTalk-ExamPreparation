@@ -32,10 +32,19 @@ exports.getDetails = async (req, res) =>{
 
     const book = await bookService.findById(req.params.id).lean();
 
-    const isOwner = req.user._id == book.owner;
-    const hasWished = book.wishingList.some(id=> id == req.user._id);
+    if(book == null) {
+       return res.redirect('/404');
+    }
+    console.log(req.user)
 
-    res.render('details', {book, isOwner, hasWished})
+    if(req.user){
+
+        const isOwner = req.user._id == book.owner;
+        const hasWished = book.wishingList.some(id=> id == req.user._id);
+        return res.render('details', {book, isOwner, hasWished})
+    }  
+
+    res.render('details', {book})
 }
 
 exports.wishToRead = async (req, res) =>{
